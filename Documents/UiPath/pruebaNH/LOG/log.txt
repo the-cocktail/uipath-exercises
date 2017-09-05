@@ -1,0 +1,47 @@
+{
+  "country": "Spain",
+  "device": "Desktop",
+  "name": "NH",
+  "step": "home_page",
+  "url": "https://www.nh-hotels.com/",
+  "query": "3_nights_2_adults_0_kids",
+  "query_date": "2017-12-15",
+  "first_byte_time": 46,
+  "on_load": 1744,
+  "page_load_time": 1923,
+  "image_load_time": 210,
+  "css_load_time": 210,
+  "js_load_time": 190,
+  "audio_load_time": "",
+  "video_load_time": 15,
+  "html_load_time": 10,
+  "text_load_time": 0,
+  "requests": 73,
+  "total_size": 102169,
+  "started_date_time": "08/28/2017 12:36:50"
+}
+NH Desktop select_hotel_page {"country":"Spain","device":"","name":"","step":"","url":"https://www.nh-hotels.com/booking/hotels/","query":"","query_date":"","first_byte_time":49,"on_load":2261,"page_load_time":3918,"image_load_time":630,"css_load_time":78,"js_load_time":21,"audio_load_time":"","video_load_time":21,"html_load_time":1275,"text_load_time":0,"requests":114,"total_size":537792,"started_date_time":""} HOTELES: 22HABITACIONES: 0query: 3_nights_2_adults_0_kids
+NH Desktop select_room_page {"country":"Spain","device":"","name":"","step":"","url":"https://www.nh-hotels.com/booking/","query":"","query_date":"","first_byte_time":9287,"on_load":13752,"page_load_time":13045,"image_load_time":3916,"css_load_time":3,"js_load_time":496,"audio_load_time":"","video_load_time":6,"html_load_time":136,"text_load_time":0,"requests":150,"total_size":715233,"started_date_time":""} HOTELES: 22HABITACIONES: 6query: 3_nights_2_adults_0_kids
+NH Desktop checkout_page {"country":"Spain","device":"","name":"","step":"","url":"https://www.nh-hotels.com/booking/step2-personal-data-prepaid/","query":"","query_date":"","first_byte_time":3255,"on_load":6545,"page_load_time":10550,"image_load_time":120,"css_load_time":10,"js_load_time":561,"audio_load_time":"","video_load_time":6,"html_load_time":91,"text_load_time":0,"requests":78,"total_size":137018,"started_date_time":""} HOTELES: 22HABITACIONES: 6query: 3_nights_2_adults_0_kids
+{
+  "country": "Spain",
+  "device": "Desktop",
+  "name": "NH",
+  "step": "home_page",
+  "url": "https://www.nh-hotels.com/",
+  "query": "3_nights_2_adults_0_kids",
+  "query_date": "2017-12-15",
+  "first_byte_time": 207,
+  "on_load": 3446,
+  "page_load_time": 4351,
+  "image_load_time": 253,
+  "css_load_time": 231,
+  "js_load_time": 595,
+  "audio_load_time": "",
+  "video_load_time": 15,
+  "html_load_time": 21,
+  "text_load_time": 0,
+  "requests": 94,
+  "total_size": 102169,
+  "started_date_time": "08/28/2017 13:04:43"
+}

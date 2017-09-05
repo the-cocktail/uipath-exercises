@@ -1,0 +1,12 @@
+{
+  "description": "PruebaScrapping para nh",
+  "version": "2016.2.6379.27755",
+  "main": "Main.xaml",
+  "id": "pruebaNH",
+  "dependencies": {},
+  "configurationOptions": {},
+  "excludedData": [
+    "Private:*",
+    "*password*"
+  ]
+}
