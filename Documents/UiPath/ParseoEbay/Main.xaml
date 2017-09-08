@@ -70,7 +70,25 @@
       <Variable x:TypeArguments="scg:List(x:String)" Default="[new List(of String)]" Name="BBDDscript" />
       <Variable x:TypeArguments="x:String" Name="created_at" />
       <Variable x:TypeArguments="ui:GenericValue" Name="path" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="mailpass" />
+      <Variable x:TypeArguments="x:String" Name="mail" />
     </Sequence.Variables>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_7">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[mail]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">XXXXXXX@AAAAA.com</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_8">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[mailpass]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">["************"]</InArgument>
+      </Assign.Value>
+    </Assign>
     <Assign sap2010:WorkflowViewState.IdRef="Assign_5">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[created_at]</OutArgument>
@@ -152,7 +170,7 @@
                         <TryCatch DisplayName="Try catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
                           <TryCatch.Try>
                             <Sequence sap2010:WorkflowViewState.IdRef="Sequence_13">
-                              <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[cuerpo]" DisplayName="Send SMTP Mail Message" Email="jeronimogaru@gmail.com" EnableSSL="True" sap2010:WorkflowViewState.IdRef="SendMail_2" IsBodyHtml="False" Password="a14863456" Port="465" SecureConnection="Auto" Server="smtp.gmail.com" Subject="Informe de portatiles en Ebay" To="[correo]">
+                              <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[cuerpo]" DisplayName="Send SMTP Mail Message" Email="[mail]" EnableSSL="True" sap2010:WorkflowViewState.IdRef="SendMail_2" IsBodyHtml="False" Password="[mailpass]" Port="465" SecureConnection="Auto" Server="smtp.gmail.com" Subject="Informe de portatiles en Ebay" To="[correo]">
                                 <ui:SendMail.Files>
                                   <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
                                     <InArgument x:TypeArguments="x:String">C:\Users\Jerónimo Gallego\Documents\UiPath\Practica 5.1\Laptop.xlsx</InArgument>
@@ -269,10 +287,12 @@
         </ui:WindowScope.Body>
       </ui:WindowScope>
     </Sequence>
-    <sads:DebugSymbol.Symbol>d0BDOlxVc2Vyc1xKZXLDs25pbW8gR2FsbGVnb1xEb2N1bWVudHNcVWlQYXRoXFBhcnNlb0ViYXlcTWFpbi54YW1sakADkQIOAgEBRDREcQIBA0Y+RlUCAQJKBVEOAgF7UgVZDgIBd1oFzgEWAgEjzwEF4gEQAgEX4wEFjwIQAgEETzBPVgIBfkwxTD0CAXxXN1dJAgF6VDhUPgIBeFqwAVq9AQIBdVrCAVrLAQIBdGALywEWAgEk0AEH4AEXAgEb4QEH4QGpAQIBGOQBB+gBFwIBFukBB+0BFQIBFO4BB44CGAIBBWQNygEYAgEl0AEg0AEvAgEh1gEN3QEYAgEc4QFe4QGmAQIBGekBkQLpAaECAgEV7gH3Ae4B0QICARP0AQ2LAhgCAQZoD2h7AgFzaQ9phwECAXJqD24dAgFubw92GgIBancPeyACAWF8D3yNAgIBW30PfewBAgFZfg+CASACAVODAQ/JARQCASbXAQ/cAR4CAR31AQ/5AR0CARH6AQ+KAhwCAQdsogFszAECAXFqnQFqowECAXBqvgJqxgICAW90ogF0zQECAW1xO3E/AgFscS5xMgIBa3eDBneIBgIBaXmiAXnRAQIBaHdkd2kCAWd3L3c1AgFmd0B3TwIBZHeaBnfYBgIBY3e0AXe/BQIBYnyzAXy3AQIBYHw6fEkCAV58nQF8pQECAV18xQF8igICAVx9nQF9zgECAVp+gwF+sAECAVh+uQF+3AECAVeAAUKAAU0CAVV+4wF+kAICAVSDAR2DATkCASeFARPEAR4CASrHARPHAdMBAgEo2QFE2QFQAgEf2wE42wGvAgIBHvUBlwL1AeACAgES+gGCAfoBkAECAQ+AAhWHAiACAQiGARXCAR8CAS3DARXDAdEBAgErxwGoAccBwQECASmBAheFAiUCAQyGAheGAtoBAgEJhgFrhgF9AgFRhwEXwQEiAgEuwwGqAcMBvwECASyBAqUCgQKZAwIBDYYCboYC1wECAQqLARmSASICAU2TARmXASoCAUiYARm4ASQCATO5ARnAASICAS+QAUWQAUkCAVCNAUaNAVECAU6TAaABkwHeAQIBTJUBRZUBTQIBSpMB5QGTAaMCAgFJmgEdogEoAgE8qgEhtAEsAgE0vgFFvgFKAgEyuwFGuwFRAgEwmwEfoQEtAgE9qwEjqwGbAQIBOawBI7MBLAIBNZsBtQObAb8DAgFGngFMngGPAQIBRZsBmgGbAaQBAgFDmwGSA5sBsQMCAUKbAdABmwHoAQIBQZsB1AKbAdkCAgFAmwH5ApsBiQMCAT+bAcMCmwHOAgIBPqsBeqsBmAECATqxAU+xAVMCATiuAVCuAVsCATY=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0BDOlxVc2Vyc1xKZXLDs25pbW8gR2FsbGVnb1xEb2N1bWVudHNcVWlQYXRoXFBhcnNlb0ViYXlcTWFpbi54YW1scEADowIOAgEBRDREcQIBA0Y+RlUCAQJMBVMOAwGEAVQFWw4DAYABXAVjDgIBfGQFaw4CAXhsBeABFgIBI+EBBfQBEAIBF/UBBaECEAIBBFEwUUEDAYcBTjFONwMBhQFZN1lHAwGDAVY4VkIDAYEBYTBhVgIBf14xXj0CAX1pN2lJAgF7ZjhmPgIBeWywAWy9AQIBdmzCAWzLAQIBdXIL3QEWAgEk4gEH8gEXAgEb8wEH8wGpAQIBGPYBB/oBFwIBFvsBB/8BFQIBFIACB6ACGAIBBXYN3AEYAgEl4gEg4gEvAgEh6AEN7wEYAgEc8wFe8wGmAQIBGfsBkQL7AaECAgEVgAL3AYAC0QICAROGAg2dAhgCAQZ6D3p7AgF0ew97hwECAXN8D4ABHQIBb4EBD4gBGgIBa4kBD40BIAIBYo4BD44BjQICAVyPAQ+PAewBAgFakAEPlAEgAgFUlQEP2wEUAgEm6QEP7gEeAgEdhwIPiwIdAgERjAIPnAIcAgEHfqIBfswBAgFyfJ0BfKMBAgFxfL4CfMYCAgFwhgGiAYYBzQECAW6DATuDAT8CAW2DAS6DATICAWyJAYMGiQGIBgIBaosBogGLAdEBAgFpiQFkiQFpAgFoiQEviQE1AgFniQFAiQFPAgFliQGaBokB2AYCAWSJAbQBiQG/BQIBY44BswGOAbcBAgFhjgE6jgFJAgFfjgGdAY4BpQECAV6OAcUBjgGKAgIBXY8BnQGPAc4BAgFbkAGDAZABsAECAVmQAbkBkAHcAQIBWJIBQpIBTQIBVpAB4wGQAZACAgFVlQEdlQE5AgEnlwET1gEeAgEq2QET2QHTAQIBKOsBROsBUAIBH+0BOO0BrwICAR6HApcChwLgAgIBEowCggGMApABAgEPkgIVmQIgAgEImAEV1AEfAgEt1QEV1QHRAQIBK9kBqAHZAcEBAgEpkwIXlwIlAgEMmAIXmALaAQIBCZgBa5gBfQIBUpkBF9MBIgIBLtUBqgHVAb8BAgEskwKlApMCmQMCAQ2YAm6YAtcBAgEKnQEZpAEiAgFOpQEZqQEqAgFJqgEZygEkAgEzywEZ0gEiAgEvogFFogFJAgFRnwFGnwFRAgFPpQGgAaUB3gECAU2nAUWnAU0CAUulAeUBpQGjAgIBSqwBHbQBKAIBPLwBIcYBLAIBNNABRdABSgIBMs0BRs0BUQIBMK0BH7MBLQIBPb0BI70BmwECATm+ASPFASwCATWtAaYDrQGwAwIBR7ABTLABjwECAUatAZoBrQGkAQIBRK0BgwOtAaIDAgFDrQHQAa0B2AECAUGtAcUCrQHKAgIBQK0B6gKtAfoCAgE/rQGzAq0BvwICAT69AXq9AZgBAgE6wwFPwwFTAgE4wAFQwAFbAgE2</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="884.8,60.8" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="884.8,60.8" />
       <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="884.8,60.8" />
       <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="884.8,60.8" />
       <sap2010:ViewStateData Id="ShowWindow_1" sap:VirtualizedContainerService.HintSize="825.6,22.4" />
@@ -295,7 +315,7 @@
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="243.2,62.4" />
       <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
-      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="264,286.4">
+      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="265.6,288">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -344,7 +364,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="884.8,2835.2" />
+      <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="884.8,2875.2" />
       <sap2010:ViewStateData Id="InvokeMethod_1" sap:VirtualizedContainerService.HintSize="217.6,134.4" />
       <sap2010:ViewStateData Id="Sequence_17" sap:VirtualizedContainerService.HintSize="240,259.2">
         <sap:WorkflowViewStateService.ViewState>
@@ -390,14 +410,14 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="907.2,5236.8">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="907.2,5478.4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="947.2,5316.8" />
+      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="947.2,5558.4" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
