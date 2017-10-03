@@ -233,7 +233,7 @@
                               <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[cuerpo]" DisplayName="Send SMTP Mail Message" Email="[mail]" EnableSSL="True" sap2010:WorkflowViewState.IdRef="SendMail_2" IsBodyHtml="False" Password="[mailpass]" Port="465" SecureConnection="Auto" Server="smtp.gmail.com" Subject="Informe de portatiles en Ebay" To="[correo]">
                                 <ui:SendMail.Files>
                                   <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
-                                    <InArgument x:TypeArguments="x:String">C:\Users\Jerónimo Gallego\Documents\UiPath\Practica 5.1\Laptop.xlsx</InArgument>
+                                    <InArgument x:TypeArguments="x:String">[excelPath]</InArgument>
                                   </scg:List>
                                 </ui:SendMail.Files>
                               </ui:SendMail>
@@ -270,12 +270,8 @@
                         </Assign>
                       </Sequence>
                     </DoWhile>
-                    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_4" Text="Comprueba tu correo" TopMost="True" />
                   </Sequence>
                 </If.Then>
-                <If.Else>
-                  <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="Pues no se lo mandamos." TopMost="True" />
-                </If.Else>
               </If>
             </Sequence>
           </Sequence>
@@ -343,11 +339,6 @@
                       <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
                     </ActivityAction.Argument>
                     <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_14">
-                      <If Condition="[items&gt;10]" sap2010:WorkflowViewState.IdRef="If_2">
-                        <If.Then>
-                          <ui:Break sap2010:WorkflowViewState.IdRef="Break_1" />
-                        </If.Then>
-                      </If>
                       <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Launch Script" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_4" SendWindowMessages="False" SimulateType="False" Text="[&quot;sqlite3 ParseoEbay.db &quot;&quot;&quot;+item.ToString + &quot;;&quot;&quot;&quot;+ &quot;[k(enter)]&quot;]">
                         <ui:TypeInto.Target>
                           <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="e332aae91f094c9ce2602b98cd8d45d7" WaitForReady="INTERACTIVE" />
@@ -371,11 +362,11 @@
         </ui:WindowScope.Body>
       </ui:WindowScope>
     </Sequence>
-    <sads:DebugSymbol.Symbol>d0BDOlxVc2Vyc1xKZXLDs25pbW8gR2FsbGVnb1xEb2N1bWVudHNcVWlQYXRoXFBhcnNlb0ViYXlcTWFpbi54YW1slAFEA/cCDgIBAUg0SHECAQNKPkpVAgECUwVTeAMBtAFUBXcQAwGdAXgFfw4DAZkBgAEFhwEOAwGVAYgBBY8BDgMBkQGQAQWXAQ4DAY0BmAEFnwEOAwGJAaABBacBDgMBhQGoAQWcAhYCATCdAgWwAhACASSxAgX1AhACAQRTXFN1AwG1AVYJXRQDAagBZQ1zGAMBngF9MH1UAwGcAXoxejcDAZoBhQE3hQFfAwGYAYIBOIIBQgMBlgGNATeNAWADAZQBigE4igFDAwGSAZUBN5UBXQMBkAGSATiSAUADAY4BnQEwnQFWAwGMAZoBMZoBPQMBigGlATelAUkDAYgBogE4ogE+AwGGAagBsAGoAb0BAwGDAagBwgGoAcsBAwGCAa4BC5kCFgIBMZ4CB64CFwIBKK8CB68CqQECASW1Age5AhcCASO6Age+AhUCASG/Agf0AhgCAQVaC1qmAQMBsAFbC1vVAQMBqwFcC1yTAQMBqQFpD2nmAgMBpQFqD3EYAwGhAXIPcosBAwGfAbIBDZgCGAIBMp4CIJ4CLwIBLqQCDasCGAIBKa8CXq8CpgECASa6ApECugKhAgIBIr8C9wG/AtECAgEgxQIN8QIYAgEGWl9acgMBswFaJFo4AwGxAVu+AVvSAQMBrgFbnQFbsgEDAawBXGJckAEDAaoBaUtpfQMBpwFpzAFp1AIDAaYBb0FvRwMBpAFsQmxMAwGiAXJmcogBAwGgAbYBD7YBewMBgQG3AQ+3AYcBAwGAAbgBD7wBHQIBfL0BD8QBGgIBeMUBD8kBIAIBb8oBD8oB1QECAWnLAQ/LAewBAgFnzAEP0AEgAgFh0QEPlwIUAgEzpQIPqgIeAgEqxgIPygIdAgEeywIP0gIYAgEa0wIP8AIcAgEHugGiAboBzAECAX+4AZ0BuAGjAQIBfrgBvgK4AcYCAgF9wgGiAcIBzQECAXu/ATu/AT8CAXq/AS6/ATICAXnFAYMGxQGNBgIBd8cBogHHAdEBAgF2xQFkxQFpAgF1xQEvxQE1AgF0xQFAxQFPAgFyxQGfBsUB3QYCAXHFAbQBxQG/BQIBcMoBswHKAbcBAgFuygE6ygFJAgFsygGdAcoBpQECAWvKAcUBygHSAQIBassBnQHLAc4BAgFozAGDAcwBsAECAWbMAbkBzAHcAQIBZc4BQs4BTQIBY8wB4wHMAZACAgFi0QEd0QE5AgE00wETkgIeAgE3lQITlQLTAQIBNacCRKcCUAIBLKkCOKkCrwICASvGApcCxgLgAgIBH9ACOdACOgIBHc0COs0CQQIBG9MCggHTApABAgEY2QIV7QIgAgEI1AEVkAIfAgE6kQIVkQLRAQIBOJUCqAGVAsEBAgE22gIX3gIcAgEU3wIX4wIlAgER5AIX5ALaAQIBDuUCF+wCIAIBCdQBa9QBfQIBX9UBF48CIgIBO5ECqgGRAr8BAgE52gIl2gI0AgEV3AIb3AJRAgEX3wKlAt8CmQMCARLkAm7kAtcBAgEP6gJB6gJLAgEM5wJC5wJJAgEK2QEZ4AEiAgFb4QEZ5QEqAgFW5gEZhgIkAgFAhwIZjgIiAgE83gFF3gFJAgFe2wFG2wFRAgFc4QGgAeEB3gECAVrjAUXjAU0CAVjhAeUB4QGjAgIBV+gBHfABKAIBSfgBIYICLAIBQYwCRYwCSgIBP4kCRokCUQIBPekBH+8BLQIBSvkBI/kBmwECAUb6ASOBAiwCAULpAaYD6QGwAwIBVOwBTOwBjwECAVPpAZoB6QGkAQIBUekBgwPpAaIDAgFQ6QHQAekB2AECAU7pAcUC6QHKAgIBTekB6gLpAfoCAgFM6QGzAukBvwICAUv5AXr5AZgBAgFH/wFP/wFTAgFF/AFQ/AFbAgFD</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0BDOlxVc2Vyc1xKZXLDs25pbW8gR2FsbGVnb1xEb2N1bWVudHNcVWlQYXRoXFBhcnNlb0ViYXlcTWFpbi54YW1sjQFEA+4CDgIBAUg0SHECAQNKPkpVAgECUwVTeAMBrAFUBXcQAwGVAXgFfw4DAZEBgAEFhwEOAwGNAYgBBY8BDgMBiQGQAQWXAQ4DAYUBmAEFnwEOAwGBAaABBacBDgIBfagBBZgCFgIBLJkCBawCEAIBIK0CBewCEAIBBFNcU3UDAa0BVgldFAMBoAFlDXMYAwGWAX0wfVQDAZQBejF6NwMBkgGFATeFAV8DAZABggE4ggFCAwGOAY0BN40BYAMBjAGKATiKAUMDAYoBlQE3lQFdAwGIAZIBOJIBQAMBhgGdATCdAVYDAYQBmgExmgE9AwGCAaUBN6UBSQMBgAGiATiiAT4CAX6oAbABqAG9AQIBe6gBwgGoAcsBAgF6rgELlQIWAgEtmgIHqgIXAgEkqwIHqwKpAQIBIbECB7UCFwIBH7YCB7oCFQIBHbsCB+sCGAIBBVoLWqYBAwGoAVsLW9UBAwGjAVwLXJMBAwGhAWkPaeYCAwGdAWoPcRgDAZkBcg9yiwEDAZcBsgENlAIYAgEumgIgmgIvAgEqoAINpwIYAgElqwJeqwKmAQIBIrYCkQK2AqECAgEeuwL3AbsC0QICARzBAg3oAhgCAQZaX1pyAwGrAVokWjgDAakBW74BW9IBAwGmAVudAVuyAQMBpAFcYlyQAQMBogFpS2l9AwGfAWnMAWnUAgMBngFvQW9HAwGcAWxCbEwDAZoBcmZyiAEDAZgBtgEPtgF7AgF5twEPtwGHAQIBeLgBD7wBHQIBdL0BD8QBGgIBcMUBD8kBIAIBZ8oBD8oB1QECAWHLAQ/LAewBAgFfzAEP0AEgAgFZ0QEPkwIUAgEvoQIPpgIeAgEmwgIPxgIdAgEaxwIPzgIYAgEWzwIP5wIcAgEHugGiAboBzAECAXe4AZ0BuAGjAQIBdrgBvgK4AcYCAgF1wgGiAcIBzQECAXO/ATu/AT8CAXK/AS6/ATICAXHFAYMGxQGNBgIBb8cBogHHAdEBAgFuxQFkxQFpAgFtxQEvxQE1AgFsxQFAxQFPAgFqxQGfBsUB3QYCAWnFAbQBxQG/BQIBaMoBswHKAbcBAgFmygE6ygFJAgFkygGdAcoBpQECAWPKAcUBygHSAQIBYssBnQHLAc4BAgFgzAGDAcwBsAECAV7MAbkBzAHcAQIBXc4BQs4BTQIBW8wB4wHMAZACAgFa0QEd0QE5AgEw0wETkQIeAgExowJEowJQAgEopQI4pQKvAgIBJ8IClwLCAuACAgEbzAI5zAI6AgEZyQI6yQJBAgEXzwKCAc8CkAECARTVAhXkAiACAQjUARWQAh8CATLWAhfaAiUCARHbAhfbAtoBAgEO3AIX4wIgAgEJ1AFr1AF9AgFX1QEXjwIiAgEz1gKlAtYCmQMCARLbAm7bAtcBAgEP4QJB4QJLAgEM3gJC3gJJAgEK2QEZ4AEiAgFT4QEZ5QEqAgFO5gEZhgIkAgE4hwIZjgIiAgE03gFF3gFJAgFW2wFG2wFRAgFU4QGgAeEB3gECAVLjAUXjAU0CAVDhAeUB4QGjAgIBT+gBHfABKAIBQfgBIYICLAIBOYwCRYwCSgIBN4kCRokCUQIBNekBH+8BLQIBQvkBI/kBmwECAT76ASOBAiwCATrpAaYD6QGwAwIBTOwBTOwBVwIBS+kBmgHpAaQBAgFJ6QGDA+kBogMCAUjpAdAB6QHYAQIBRukBxQLpAcoCAgFF6QHqAukB+gICAUTpAbMC6QG/AgIBQ/kBevkBmAECAT//AU//AVMCAT38AVD8AVsCATs=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="884.8,62.4" />
+      <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="672,62.4" />
       <sap2010:ViewStateData Id="ReadTextFile_1" sap:VirtualizedContainerService.HintSize="313.6,59.2" />
       <sap2010:ViewStateData Id="DeserializeJson`1_1" sap:VirtualizedContainerService.HintSize="313.6,60.8" />
       <sap2010:ViewStateData Id="WriteLine_5" sap:VirtualizedContainerService.HintSize="313.6,62.4" />
@@ -404,21 +395,21 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="884.8,619.2" />
-      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="884.8,60.8" />
-      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="884.8,60.8" />
-      <sap2010:ViewStateData Id="Assign_12" sap:VirtualizedContainerService.HintSize="884.8,60.8" />
-      <sap2010:ViewStateData Id="Assign_13" sap:VirtualizedContainerService.HintSize="884.8,60.8" />
-      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="884.8,60.8" />
-      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="884.8,60.8" />
-      <sap2010:ViewStateData Id="ShowWindow_1" sap:VirtualizedContainerService.HintSize="825.6,22.4" />
-      <sap2010:ViewStateData Id="MaximizeWindow_1" sap:VirtualizedContainerService.HintSize="825.6,22.4" />
-      <sap2010:ViewStateData Id="TypeInto_1" sap:VirtualizedContainerService.HintSize="825.6,134.4" />
-      <sap2010:ViewStateData Id="Click_1" sap:VirtualizedContainerService.HintSize="825.6,107.2" />
-      <sap2010:ViewStateData Id="ExtractData_1" sap:VirtualizedContainerService.HintSize="825.6,107.2" />
-      <sap2010:ViewStateData Id="WriteRange_1" sap:VirtualizedContainerService.HintSize="825.6,115.2" />
-      <sap2010:ViewStateData Id="CloseWindow_1" sap:VirtualizedContainerService.HintSize="825.6,68.8" />
-      <sap2010:ViewStateData Id="InputDialog_1" sap:VirtualizedContainerService.HintSize="825.6,92.8" />
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="672,619.2" />
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="672,60.8" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="672,60.8" />
+      <sap2010:ViewStateData Id="Assign_12" sap:VirtualizedContainerService.HintSize="672,60.8" />
+      <sap2010:ViewStateData Id="Assign_13" sap:VirtualizedContainerService.HintSize="672,60.8" />
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="672,60.8" />
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="672,60.8" />
+      <sap2010:ViewStateData Id="ShowWindow_1" sap:VirtualizedContainerService.HintSize="612.8,22.4" />
+      <sap2010:ViewStateData Id="MaximizeWindow_1" sap:VirtualizedContainerService.HintSize="612.8,22.4" />
+      <sap2010:ViewStateData Id="TypeInto_1" sap:VirtualizedContainerService.HintSize="612.8,134.4" />
+      <sap2010:ViewStateData Id="Click_1" sap:VirtualizedContainerService.HintSize="612.8,107.2" />
+      <sap2010:ViewStateData Id="ExtractData_1" sap:VirtualizedContainerService.HintSize="612.8,107.2" />
+      <sap2010:ViewStateData Id="WriteRange_1" sap:VirtualizedContainerService.HintSize="612.8,115.2" />
+      <sap2010:ViewStateData Id="CloseWindow_1" sap:VirtualizedContainerService.HintSize="612.8,68.8" />
+      <sap2010:ViewStateData Id="InputDialog_1" sap:VirtualizedContainerService.HintSize="612.8,92.8" />
       <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="417.6,60.8" />
       <sap2010:ViewStateData Id="InputDialog_3" sap:VirtualizedContainerService.HintSize="417.6,92.8" />
       <sap2010:ViewStateData Id="SendMail_2" sap:VirtualizedContainerService.HintSize="313.6,145.6" />
@@ -456,31 +447,29 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="DoWhile_1" sap:VirtualizedContainerService.HintSize="465.6,1123.2" />
-      <sap2010:ViewStateData Id="MessageBox_4" sap:VirtualizedContainerService.HintSize="465.6,59.2" />
-      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="488,1347.2">
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="488,1248">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="MessageBox_1" sap:VirtualizedContainerService.HintSize="313.6,59.2" />
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="825.6,1496" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="848,2611.2">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="612.8,1396.8" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="635.2,2512">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="870.4,2736">
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="657.6,2636.8">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="884.8,2835.2" />
+      <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="672,2736" />
       <sap2010:ViewStateData Id="InvokeMethod_1" sap:VirtualizedContainerService.HintSize="217.6,134.4" />
       <sap2010:ViewStateData Id="Sequence_17" sap:VirtualizedContainerService.HintSize="240,259.2">
         <sap:WorkflowViewStateService.ViewState>
@@ -491,53 +480,51 @@
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="286.4,408" />
       <sap2010:ViewStateData Id="WriteLine_3" sap:VirtualizedContainerService.HintSize="286.4,62.4" />
-      <sap2010:ViewStateData Id="Sequence_18" sap:VirtualizedContainerService.HintSize="884.8,635.2">
+      <sap2010:ViewStateData Id="Sequence_18" sap:VirtualizedContainerService.HintSize="672,635.2">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendHotkey_1" sap:VirtualizedContainerService.HintSize="539.2,116.8" />
-      <sap2010:ViewStateData Id="TypeInto_2" sap:VirtualizedContainerService.HintSize="539.2,96" />
-      <sap2010:ViewStateData Id="TypeInto_3" sap:VirtualizedContainerService.HintSize="502.4,134.4" />
-      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="502.4,60.8" />
-      <sap2010:ViewStateData Id="Break_1" sap:VirtualizedContainerService.HintSize="200,22.4" />
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,209.6" />
-      <sap2010:ViewStateData Id="TypeInto_4" sap:VirtualizedContainerService.HintSize="464,134.4" />
-      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="464,62.4" />
-      <sap2010:ViewStateData Id="Assign_10" sap:VirtualizedContainerService.HintSize="464,60.8" />
-      <sap2010:ViewStateData Id="Sequence_14" sap:VirtualizedContainerService.HintSize="486.4,712">
+      <sap2010:ViewStateData Id="SendHotkey_1" sap:VirtualizedContainerService.HintSize="414.4,116.8" />
+      <sap2010:ViewStateData Id="TypeInto_2" sap:VirtualizedContainerService.HintSize="414.4,96" />
+      <sap2010:ViewStateData Id="TypeInto_3" sap:VirtualizedContainerService.HintSize="352,134.4" />
+      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="352,60.8" />
+      <sap2010:ViewStateData Id="TypeInto_4" sap:VirtualizedContainerService.HintSize="313.6,134.4" />
+      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="313.6,62.4" />
+      <sap2010:ViewStateData Id="Assign_10" sap:VirtualizedContainerService.HintSize="313.6,60.8" />
+      <sap2010:ViewStateData Id="Sequence_14" sap:VirtualizedContainerService.HintSize="336,462.4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="502.4,846.4" />
-      <sap2010:ViewStateData Id="Sequence_15" sap:VirtualizedContainerService.HintSize="524.8,1246.4">
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="352,596.8" />
+      <sap2010:ViewStateData Id="Sequence_15" sap:VirtualizedContainerService.HintSize="374.4,996.8">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WindowScope_1" sap:VirtualizedContainerService.HintSize="539.2,1393.6" />
-      <sap2010:ViewStateData Id="Sequence_16" sap:VirtualizedContainerService.HintSize="884.8,1811.2">
+      <sap2010:ViewStateData Id="WindowScope_1" sap:VirtualizedContainerService.HintSize="414.4,1144" />
+      <sap2010:ViewStateData Id="Sequence_16" sap:VirtualizedContainerService.HintSize="672,1561.6">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="907.2,6852.8">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="694.4,6504">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="947.2,6932.8" />
+      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="734.4,6584" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
